@@ -19,7 +19,7 @@ A modern, web-based motion detection and security notification system built with
 
 ### 1. Clone the Repository
 ```bash
- git clone https://github.com/yourusername/motion-detection-app.git
+ git clone https://github.com/dharsan-kumar-3/motion-detection
  cd motion-detection-app
 ```
 
