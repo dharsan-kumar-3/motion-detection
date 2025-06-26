@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome - Motion Detection System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3a506b;
+            --secondary-color: #e9ecf1;
+            --background-color: #f7fafc;
+            --text-color: #2d3748;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --card-radius: 12px;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar {
+            background-color: #fff;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            height: 70px;
+        }
+        .navbar .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .logo-container img {
+            height: 45px;
+        }
+        .navbar .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .nav-actions a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .nav-actions a.login-btn {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+        }
+        .nav-actions a.signup-btn {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+        .main-content {
+            flex: 1;
+            max-width: 900px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .section {
+            background: #fff;
+            padding: 30px;
+            border-radius: var(--card-radius);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 30px;
+        }
+        .footer {
+            background-color: #2d3748;
+            color: #a0aec0;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo-container">
+            <a href="/"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"></a>
+        </div>
+        <div class="nav-actions">
+            <a href="/login" class="login-btn">Login</a>
+            <a href="/register" class="signup-btn">Sign Up</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="section">
+             <h1>Welcome to the Motion Detection & Security System</h1>
+            <p>Your reliable and intelligent solution for automated surveillance. Our system uses advanced computer vision to detect motion, record events, and notify you instantly, providing peace of mind whether you're at home or away.</p>
+        </div>
+        
+        <div class="section">
+            <h2>Key Features</h2>
+            <ul>
+                <li><strong>Live Webcam Monitoring:</strong> Activate your webcam to start monitoring a space in real-time.</li>
+                <li><strong>Video File Analysis:</strong> Upload existing video files to scan them for motion activity.</li>
+                <li><strong>Smart Detection:</strong> Utilizes Haar Cascades, a proven machine learning approach, to reliably detect people in the video feed.</li>
+                <li><strong>Automatic Recording:</strong> When motion is detected, the system automatically saves a video of the event and captures high-resolution screenshots.</li>
+                <li><strong>Instant SMS Alerts:</strong> Receive immediate text notifications via Twilio the moment motion is detected.</li>
+                <li><strong>Personalized Dashboard:</strong> All registered users get a secure, private dashboard to review, manage, and download their recorded sessions.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>How It Works: A Step-by-Step Guide</h2>
+            <ol>
+                <li><strong>Sign Up:</strong> Create a secure account in seconds. This gives you access to your personal dashboard.</li>
+                <li><strong>Choose Your Mode:</strong> From your dashboard, select either "Start Live Tracking" to use your webcam or "Upload and Analyze Video" to process a file.</li>
+                <li><strong>Detection in Action:</strong> The system gets to work. If motion is detected, a blue rectangle will appear around the person, and the system will start recording video and taking screenshots.</li>
+                <li><strong>Get Notified:</strong> An SMS alert is sent to your registered phone number instantly.</li>
+                <li><strong>Review Your Data:</strong> All recorded videos and screenshots are organized into sessions on your dashboard. You can view them online or download the entire session as a zip file.</li>
+            </ol>
+        </div>
+    </main>
+
+    <footer class="footer">
+        &copy; 2024 Motion Detection System. All Rights Reserved.
+    </footer>
+</body>
+</html> 

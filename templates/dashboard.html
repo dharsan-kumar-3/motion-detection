@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Motion Detection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3a506b;
+            --secondary-color: #e9ecf1;
+            --background-color: #f7fafc;
+            --text-color: #2d3748;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --card-radius: 12px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: #fff;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            height: 70px;
+        }
+
+        .navbar .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logo-container img {
+            height: 45px;
+        }
+
+        .navbar .logo-container .logo-text {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin: 0 auto;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 6px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .nav-links a.active, .nav-links a:hover {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+        }
+
+        .navbar .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-actions .welcome-msg {
+            font-weight: 500;
+        }
+
+        .user-actions .logout-btn {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .user-actions .logout-btn:hover {
+            background-color: #2c3e50;
+        }
+
+        .main-content {
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .dashboard-header {
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .dashboard-header p {
+            font-size: 1.1em;
+            color: #6a7c92;
+        }
+
+        .session-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .session-card {
+            background-color: #fff;
+            border-radius: var(--card-radius);
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        
+        .session-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .session-header {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .video-container {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .video-container video {
+            width: 100%;
+            border-radius: 8px;
+            background-color: #000;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+        }
+        
+        .screenshot-thumb {
+            width: 100%;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .screenshot-thumb:hover {
+            transform: scale(1.05);
+        }
+
+        .download-btn {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .download-btn:hover {
+            background-color: #2c3e50;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            background-color: #fff;
+            border-radius: var(--card-radius);
+            box-shadow: var(--card-shadow);
+        }
+        .empty-state h2 {
+            color: var(--primary-color);
+        }
+
+        .footer {
+            background-color: #2d3748;
+            color: #a0aec0;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: auto;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo-container">
+            <a href="/home"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"></a>
+        </div>
+        <div class="nav-links">
+            <a href="/home">Home</a>
+            <a href="/dashboard" class="active">Dashboard</a>
+            <a href="https://www.twilio.com/try-twilio" target="_blank">Twilio API</a>
+        </div>
+        {% if username %}
+        <div class="user-actions">
+            <span class="welcome-msg">Welcome, {{ username }}!</span>
+            <a href="/logout" class="logout-btn">Logout</a>
+        </div>
+        {% endif %}
+    </nav>
+
+    <main class="main-content">
+        <div class="dashboard-header">
+            <h1>Activity Dashboard</h1>
+            <p>Review your past motion detection sessions and recorded media.</p>
+        </div>
+
+        {% if sessions %}
+            <div class="session-grid">
+                {% for session in sessions %}
+                <div class="session-card">
+                    <div class="session-header">Session: {{ session.datetime }}</div>
+                    
+                    {% if session.video %}
+                    <div class="video-container">
+                        <video controls preload="metadata">
+                            <source src="{{ url_for('show_video', filename=session.video) }}#t=0.5" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    {% endif %}
+
+                    {% if session.screenshots %}
+                        <div class="screenshots-grid">
+                            {% for img in session.screenshots %}
+                                <img src="{{ url_for('show_screenshot', filename=img) }}" class="screenshot-thumb" alt="Screenshot">
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p>No screenshots for this session.</p>
+                    {% endif %}
+                    <a href="{{ url_for('download_session', session_datetime=session.datetime) }}" class="download-btn">Download Session Data</a>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <h2>No Activity Yet</h2>
+                <p>You have no saved motion detection sessions. <br>Start a new session from the <a href="/home">Home</a> page.</p>
+            </div>
+        {% endif %}
+    </main>
+
+    <footer class="footer">
+        &copy; 2024 Motion Detection System. All Rights Reserved.
+    </footer>
+
+</body>
+</html> 

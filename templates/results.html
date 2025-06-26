@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detection Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f7fafc;
+            min-height: 100vh;
+            color: #222;
+        }
+        .navbar {
+            width: 100%;
+            background: #3a506b;
+            color: #fff;
+            padding: 0 0 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(58,80,107,0.08);
+        }
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            padding: 0 32px;
+        }
+        .navbar .logo img {
+            height: 48px;
+            margin-right: 16px;
+        }
+        .main-content {
+            max-width: 900px;
+            margin: 48px auto 32px auto;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 16px rgba(58,80,107,0.06);
+            padding: 32px 32px 24px 32px;
+            text-align: center;
+        }
+        .main-content h1 {
+            color: #3a506b;
+            font-size: 2.2em;
+            margin-bottom: 18px;
+        }
+        .save-location {
+            color: #25344a;
+            font-size: 1.1em;
+            margin-bottom: 24px;
+        }
+        .screenshots-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+        .screenshot-thumb {
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(58,80,107,0.08);
+            width: 160px;
+            height: 120px;
+            object-fit: cover;
+            background: #e9ecf1;
+        }
+        .video-list {
+            margin-top: 18px;
+        }
+        .video-list a {
+            color: #3a506b;
+            text-decoration: none;
+            font-weight: 500;
+            margin-right: 18px;
+        }
+        .video-list a:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            width: 100%;
+            background: #e9ecf1;
+            color: #888;
+            text-align: center;
+            padding: 18px 0 10px 0;
+            font-size: 1em;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo2.png') }}" alt="Logo">
+        </div>
+        <div class="nav-links">
+            <a href="/home">Home</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="#" onclick="window.open('https://www.twilio.com/try-twilio')">Twilio API</a>
+        </div>
+    </div>
+    <div class="main-content">
+        <h1>Detection Results</h1>
+        <div class="save-location">
+            Screenshots and video saved at:<br>
+            <b>{{ save_dir }}</b>
+        </div>
+        {% if screenshots %}
+        <div class="screenshots-row">
+            {% for img in screenshots %}
+                <img src="{{ url_for('show_screenshot', filename=img) }}" class="screenshot-thumb" alt="Screenshot">
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No screenshots found.</p>
+        {% endif %}
+        {% if video_files %}
+        <div class="video-list">
+            <h3>Recorded Videos:</h3>
+            {% for vid in video_files %}
+                <a href="{{ url_for('show_video', filename=vid) }}" download>{{ vid }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <div class="footer">
+        &copy; 2024 Motion Detection System. All rights reserved.
+    </div>
+</body>
+</html> 
